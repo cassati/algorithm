@@ -1,28 +1,24 @@
 /**
-	Select sort
+	Bubble sort
 **/
-function select_sort(arr) {
+function bubble_sort(arr) {
 	if(null == arr || arr.length == 0) {
 		return;
 	}
-	
+    
 	var n = arr.length;
 	for(var i=0; i<n; i++) {
-		var min = i;
-		for(var j=i+1; j<n; j++) {
-			if(arr[min] > arr[j]) {
-				min = j;
+		for(var j=0; j<n-i-1; j++) {
+			if(arr[j] > arr[j+1]) {
+    			var tmp = arr[j+1];
+    			arr[j+1] = arr[j];
+    			arr[j] = tmp;
 			}
-		}
-		if(min != i) {
-			var tmp = arr[i];
-			arr[i] = arr[min];
-			arr[min] = tmp;
 		}
 	}
 }
 
-function test(arr, sort, needPrintArray) {
+function test(arr, sort) {
 	var startTime;
 	var endTime;
 
@@ -32,7 +28,7 @@ function test(arr, sort, needPrintArray) {
 	}
 	
 	startTime = new Date().getTime();
-	select_sort(arr);
+	sort(arr);
 	endTime = new Date().getTime();
 	
 	if(needPrintArray) {
@@ -44,15 +40,16 @@ function test(arr, sort, needPrintArray) {
 
 
 var a = [5,4,3,2,1];
-test(a, select_sort);
+test(a, bubble_sort);
 
 var b = [5,4,6,2,1];
-test(b, select_sort);
+test(b, bubble_sort);
 
 var c = [];
 var n = 50000;
 for(var i=0; i<n; i++) {
 	c[i] = parseInt(Math.random()*n);
 }
-test(c, select_sort);
+test(c, bubble_sort);
+
 
