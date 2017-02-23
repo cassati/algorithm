@@ -1,24 +1,27 @@
 /**
-	Select sort
+	Shell sort
 **/
-function select_sort(arr) {
+function shell_sort(arr) {
 	if(null == arr || arr.length == 0) {
 		return;
 	}
 	
 	var n = arr.length;
-	for(var i=0; i<n; i++) {
-		var min = i;
-		for(var j=i+1; j<n; j++) {
-			if(arr[min] > arr[j]) {
-				min = j;
+	var h = 1;
+	while(h < parseInt(n/3)) {
+		h = h*3 + 1;
+	}
+	while(h>=1) {
+		for(var i=h; i<n; i++) {
+			for(var j=i-h; j>=0; j-=h) {
+				if(arr[j+h] < arr[j]) {
+					var tmp = arr[j+h];
+					arr[j+h] = arr[j];
+					arr[j] = tmp;
+				}
 			}
 		}
-		if(min != i) {
-			var tmp = arr[i];
-			arr[i] = arr[min];
-			arr[min] = tmp;
-		}
+		h = parseInt(h/3);
 	}
 }
 
@@ -43,16 +46,16 @@ function test(arr, sort, needPrintArray) {
 }
 
 
-var a = [5,4,3,2,1];
-test(a, select_sort);
+var a = [7,6,5,4,3,2,1];
+test(a, shell_sort);
 
-var b = [5,4,6,2,1];
-test(b, select_sort);
+var b = [7,6,5,4,6,2,1];
+test(b, shell_sort);
 
 var c = [];
 var n = 50000;
 for(var i=0; i<n; i++) {
 	c[i] = parseInt(Math.random()*n);
 }
-test(c, select_sort);
+test(c, shell_sort);
 

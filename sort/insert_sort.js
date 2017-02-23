@@ -29,7 +29,7 @@ function test(arr, sort, needPrintArray) {
 	}
 	
 	startTime = new Date().getTime();
-	insert_sort(arr);
+	sort(arr);
 	endTime = new Date().getTime();
 	
 	if(needPrintArray) {
