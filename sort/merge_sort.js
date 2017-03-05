@@ -21,6 +21,24 @@ function do_merge_sort(arr, lo, hi) {
 	do_merge(arr, lo, mid, hi);
 }
 
+/**
+	Merge sort, bottom to up
+**/
+function merge_bu_sort(arr) {
+	if(null == arr || arr.length == 0) {
+		return;
+	}
+
+	aux = [];
+	var N = arr.length;
+	for(var sz=1; sz<N; sz=sz+sz) {
+		for(var lo=0; lo<N-sz; lo+=sz+sz) {
+			do_merge(arr, lo, lo+sz-1, Math.min(lo+sz+sz-1, N-1));
+		}
+	}
+
+}
+
 function do_merge(arr, lo, mid, hi) {
 	var i = lo;
 	var j = mid+1;
@@ -70,9 +88,18 @@ test(a, merge_sort, true);
 var b = [5,4,6,2,1];
 test(b, merge_sort, true);
 
+var a = [5,4,3,2,1];
+test(a, merge_bu_sort, true);
+
+var b = [5,4,6,2,1];
+test(b, merge_bu_sort, true);
+
 var c = [];
+var d = [];
 var n = 50000;
 for(var i=0; i<n; i++) {
 	c[i] = parseInt(Math.random()*n);
+	d[i] = c[i];
 }
 test(c, merge_sort);
+test(d, merge_bu_sort);
