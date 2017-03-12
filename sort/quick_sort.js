@@ -47,6 +47,39 @@ function partition(arr, lo, hi) {
 	return j;
 }
 
+function quick_sort_3way(arr) {
+	if(null == arr || arr.length == 0) {
+		return;
+	}
+
+	do_quick_sort_3way(arr, 0, arr.length-1);
+}
+
+function do_quick_sort_3way(arr, lo, hi) {
+	if(lo >= hi) {
+		return;
+	}
+
+	var lt = lo;
+	var gt = hi;
+	var v = arr[lo];
+	var i = lo + 1;
+
+	while(i <= gt) {
+		var cmp = arr[i] - v;
+		if(cmp < 0) {
+			exch(arr, lt++, i++);
+		}else if(cmp > 0) {
+			exch(arr, i, gt--);
+		}else {
+			i++;
+		}
+	}
+
+	do_quick_sort_3way(arr, lo, lt - 1);
+	do_quick_sort_3way(arr, gt + 1, hi);
+}
+
 function exch(arr, i, j) {
 	var tmp = arr[i];
 	arr[i] = arr[j];
@@ -80,6 +113,12 @@ test(a, quick_sort, true);
 var b = [5,4,6,2,1];
 test(b, quick_sort, true);
 
+var a = [5,4,3,2,1];
+test(a, quick_sort_3way, true);
+
+var b = [5,4,6,2,1];
+test(b, quick_sort_3way, true);
+
 var c = [];
 var d = [];
 var n = 50000;
@@ -88,3 +127,4 @@ for(var i=0; i<n; i++) {
 	d[i] = c[i];
 }
 test(c, quick_sort);
+test(d, quick_sort_3way);
