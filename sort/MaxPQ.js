@@ -1,6 +1,5 @@
 /**
 	MaxPQ
-	NOT WORKING
 **/
 
 var MaxPQ = {
@@ -8,6 +7,7 @@ var MaxPQ = {
 		var arr = [];
 		var size = maxN+1;
 		var N = 0;
+		arr[0] = -1;
 
 		return {
 			isEmpty: function() {
@@ -17,6 +17,9 @@ var MaxPQ = {
 				return N;
 			},
 			insert: function(v) {
+				if(N + 1 == size) {
+					throw {msg:'space is full'};
+				}
 				arr[++N] = v;
 				this.swim(N);
 			},
@@ -29,16 +32,14 @@ var MaxPQ = {
 			},
 			swim: function(k) {
 				while(k > 1) {
-					this.display();
-					var t = parseInt(k/2);
-					if(arr[t] < arr[k]) {
-						this.exch(arr, t, k);
-						k = t;
+					var j = parseInt(k/2);
+					if(arr[j] < arr[k]) {
+						this.exch(j, k);
 					}
+					k = j;
 				}
 			},
 			sink: function(k) {
-				var N = arr.length;
 				while(2*k <= N) {
 					var j = 2*k;
 					if(j < N && arr[j] < arr[j+1]) {
@@ -47,6 +48,7 @@ var MaxPQ = {
 					if(arr[k] >= arr[j]) {
 						break;
 					}
+					this.exch(j, k);
 					k = j;
 				}
 			},
@@ -56,7 +58,7 @@ var MaxPQ = {
 				arr[j] = tmp;
 			},
 			display: function() {
-				console.log(arr.join(','));
+				console.log(arr);
 			}
 		};
 	}
@@ -64,10 +66,13 @@ var MaxPQ = {
 };
 
 
-
 var b = [5,4,6,2,21,7,8,10,11,9,20,15];
-var pq = MaxPQ.createNew(5);
+var max = b.length;
+var pq = MaxPQ.createNew(max);
 for(var i = 0; i < b.length; i++) {
 	pq.insert(b[i]);
-	pq.display();
+}
+
+for(var i = 0; i < 5; i++) {
+	console.log(pq.delMax());
 }
